@@ -9,19 +9,24 @@ import android.text.TextUtils;
 
 public class PermissionUtils {
 
+    // Request Accessibility permission
     public static void requestAccessibilityPermission(Activity activity) {
         Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
         activity.startActivity(intent);
     }
 
+    // Request Overlay permission
     public static void requestOverlayPermission(Activity activity) {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
         activity.startActivity(intent);
     }
 
+    // Determine whether accessible services are enabled
     public static boolean isServiceEnabled(Context context, Class<?> clazz) {
         String enabledServices = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-        if (enabledServices == null) return false;
+        if (enabledServices == null) {
+            return false;
+        }
         String pkgName = context.getPackageName();
         String className = pkgName + "/" + clazz.getName();
         return enabledServices.contains(className);

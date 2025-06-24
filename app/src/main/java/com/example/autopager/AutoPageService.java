@@ -35,7 +35,6 @@ public class AutoPageService extends AccessibilityService {
                 Log.d(TAG, "执行第 " + (pageCount + 1) + " 次翻页");
                 performSlide();
                 pageCount++;
-                // 发送广播更新悬浮窗次数显示
                 sendPageCountBroadcast(pageCount, maxPages);
 
                 handler.postDelayed(this, stayTime + slideTime);
@@ -43,7 +42,6 @@ public class AutoPageService extends AccessibilityService {
                 Log.d(TAG, "已达到最大翻页次数，停止任务");
                 running = false;
                 Toast.makeText(getApplicationContext(), "自动翻页完成", Toast.LENGTH_SHORT).show();
-                // 发送最终次数
                 sendPageCountBroadcast(pageCount, maxPages);
             }
         }
@@ -70,7 +68,6 @@ public class AutoPageService extends AccessibilityService {
         Log.d(TAG, "开始自动翻页任务: 最大页数=" + maxPages +
                 ", 停留时间=" + stayTime + "ms, 滑动时间=" + slideTime +
                 "ms, 方向=" + direction + ", 随机=" + random);
-        // 启动时立即发送初始次数
         sendPageCountBroadcast(pageCount, maxPages);
         handler.post(pageTask);
         Toast.makeText(this, "开始自动翻页", Toast.LENGTH_SHORT).show();
@@ -84,14 +81,12 @@ public class AutoPageService extends AccessibilityService {
         Log.d(TAG, "停止自动翻页任务，已翻页 " + pageCount + " 次");
         running = false;
         handler.removeCallbacks(pageTask);
-        // 停止后次数归零
         pageCount = 0;
         sendPageCountBroadcast(pageCount, maxPages);
         Toast.makeText(this, "停止自动翻页", Toast.LENGTH_SHORT).show();
     }
 
     private void sendPageCountBroadcast(int cur, int total) {
-        // 向FloatWindowService广播更新次数
         Intent intent = new Intent("com.example.autopager.UPDATE_COUNT");
         intent.putExtra("cur", cur);
         intent.putExtra("total", total);
@@ -103,12 +98,10 @@ public class AutoPageService extends AccessibilityService {
             int width = getResources().getDisplayMetrics().widthPixels;
             int height = getResources().getDisplayMetrics().heightPixels;
 
-            // 根据方向确定滑动的起始点和结束点
             int startX, startY, endX, endY;
 
             switch (direction) {
                 case "down":
-                    // 下滑：从屏幕上部向下部滑动
                     startX = width / 2;
                     startY = (int)(height * 0.25);
                     endX = width / 2;
@@ -116,7 +109,6 @@ public class AutoPageService extends AccessibilityService {
                     Log.d(TAG, "执行下滑手势");
                     break;
                 case "up":
-                    // 上滑：从屏幕下部向上部滑动
                     startX = width / 2;
                     startY = (int)(height * 0.75);
                     endX = width / 2;
@@ -124,7 +116,6 @@ public class AutoPageService extends AccessibilityService {
                     Log.d(TAG, "执行上滑手势");
                     break;
                 case "left":
-                    // 左滑：从屏幕右侧向左侧滑动
                     startX = (int)(width * 0.85);
                     startY = height / 2;
                     endX = (int)(width * 0.15);
@@ -132,7 +123,6 @@ public class AutoPageService extends AccessibilityService {
                     Log.d(TAG, "执行左滑手势");
                     break;
                 case "right":
-                    // 右滑：从屏幕左侧向右侧滑动
                     startX = (int)(width * 0.15);
                     startY = height / 2;
                     endX = (int)(width * 0.85);
@@ -140,7 +130,6 @@ public class AutoPageService extends AccessibilityService {
                     Log.d(TAG, "执行右滑手势");
                     break;
                 default:
-                    // 默认为下滑
                     startX = width / 2;
                     startY = (int)(height * 0.25);
                     endX = width / 2;
@@ -149,9 +138,8 @@ public class AutoPageService extends AccessibilityService {
                     break;
             }
 
-            // 随机扰动，使滑动更自然
             if (random) {
-                int randomRange = 40; // 随机扰动范围
+                int randomRange = 40;
                 startX += (int)(Math.random() * randomRange - randomRange/2);
                 startY += (int)(Math.random() * randomRange - randomRange/2);
                 endX += (int)(Math.random() * randomRange - randomRange/2);
@@ -159,28 +147,23 @@ public class AutoPageService extends AccessibilityService {
                 Log.d(TAG, "添加随机扰动");
             }
 
-            // 创建路径
             Path path = new Path();
             path.moveTo(startX, startY);
 
-            // 如果需要更自然的滑动轨迹，可以添加一些曲线
             if (random) {
                 float controlX = (startX + endX) / 2 + (float)(Math.random() * 30 - 15);
                 float controlY = (startY + endY) / 2 + (float)(Math.random() * 30 - 15);
                 path.quadTo(controlX, controlY, endX, endY);
                 Log.d(TAG, "使用曲线轨迹");
             } else {
-                // 直线滑动
                 path.lineTo(endX, endY);
                 Log.d(TAG, "使用直线轨迹");
             }
 
-            // 创建手势描述并执行
             GestureDescription.StrokeDescription stroke = new GestureDescription.StrokeDescription(path, 0, slideTime);
             GestureDescription.Builder builder = new GestureDescription.Builder();
             builder.addStroke(stroke);
 
-            // 使用正确的回调类：AccessibilityService.GestureResultCallback
             boolean result = dispatchGesture(builder.build(), new AccessibilityService.GestureResultCallback() {
                 @Override
                 public void onCompleted(GestureDescription gestureDescription) {
@@ -195,9 +178,7 @@ public class AutoPageService extends AccessibilityService {
                 }
             }, null);
 
-            if (result) {
-                Log.d(TAG, "手势开始执行");
-            } else {
+            if (!result) {
                 Log.e(TAG, "手势执行失败");
             }
         } catch (Exception e) {
@@ -207,7 +188,6 @@ public class AutoPageService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        // 我们不需要处理这些事件
     }
 
     @Override
@@ -217,9 +197,6 @@ public class AutoPageService extends AccessibilityService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "收到服务命令: " + (intent != null ? intent.getAction() : "null"));
-
-        // 接受悬浮窗服务的控制指令
         if (intent != null && "start".equals(intent.getAction())) {
             try {
                 SharedPreferences sp = getSharedPreferences("autopager", MODE_PRIVATE);

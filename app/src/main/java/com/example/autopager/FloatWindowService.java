@@ -61,35 +61,27 @@ public class FloatWindowService extends Service {
         params.gravity = Gravity.TOP | Gravity.START;
         params.x = 0; params.y = 200;
 
-        // 获取控件
         Button btnStartStop = floatView.findViewById(R.id.btn_start_stop);
         TextView tvCount = floatView.findViewById(R.id.tv_count);
         Button btnClose = floatView.findViewById(R.id.btn_close);
 
-        // 初始化次数显示
         tvCount.setText(currentCount + "/" + totalCount);
 
-        // 初始化透明度
         SharedPreferences sp = getSharedPreferences("autopager", MODE_PRIVATE);
         int alpha = sp.getInt("float_alpha", 80);
         updateAlpha(alpha);
 
         btnStartStop.setOnClickListener(v -> {
             if (!isStarted) {
-                // 点击“开始”
                 if (!isAccessibilityServiceEnabled()) {
                     Toast.makeText(this, "请先开启无障碍服务", Toast.LENGTH_SHORT).show();
                     openAccessibilitySettings();
                     return;
                 }
-                Log.d(TAG, "开始按钮被点击");
-                Toast.makeText(this, "开始自动翻页", Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(this, AutoPageService.class);
                 intent.setAction("start");
                 try {
                     startService(intent);
-                    Log.d(TAG, "已发送开始命令到AutoPageService");
                     isStarted = true;
                     btnStartStop.setText("停止");
                 } catch (Exception e) {
@@ -97,15 +89,10 @@ public class FloatWindowService extends Service {
                     Toast.makeText(this, "启动服务失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                // 点击“停止”
-                Log.d(TAG, "停止按钮被点击");
-                Toast.makeText(this, "停止自动翻页", Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(this, AutoPageService.class);
                 intent.setAction("stop");
                 try {
                     startService(intent);
-                    Log.d(TAG, "已发送停止命令到AutoPageService");
                 } catch (Exception e) {
                     Log.e(TAG, "停止服务失败", e);
                     Toast.makeText(this, "停止服务失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -115,7 +102,6 @@ public class FloatWindowService extends Service {
             }
         });
 
-        // 关闭悬浮窗按钮
         btnClose.setOnClickListener(v -> {
             try {
                 if (windowManager != null && floatView != null) {
@@ -135,7 +121,6 @@ public class FloatWindowService extends Service {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (screenWidth == 0 || screenHeight == 0) {
-                    // 获取屏幕可用尺寸（不含状态栏/导航栏）
                     WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                         WindowMetrics metrics = wm.getCurrentWindowMetrics();
@@ -165,9 +150,7 @@ public class FloatWindowService extends Service {
                         int newX = paramX + dx;
                         int newY = paramY + dy;
 
-                        // 限制X范围
                         newX = Math.max(0, Math.min(newX, screenWidth - viewWidth));
-                        // 限制Y范围
                         newY = Math.max(0, Math.min(newY, screenHeight - viewHeight));
 
                         params.x = newX;
@@ -181,13 +164,11 @@ public class FloatWindowService extends Service {
 
         try {
             windowManager.addView(floatView, params);
-            Log.d(TAG, "悬浮窗添加成功");
         } catch (Exception e) {
             Log.e(TAG, "添加悬浮窗失败", e);
             Toast.makeText(this, "添加悬浮窗失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
-        // 注册次数和透明度更新广播
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.example.autopager.UPDATE_COUNT");
         filter.addAction("com.example.autopager.UPDATE_ALPHA");
@@ -195,7 +176,6 @@ public class FloatWindowService extends Service {
         registerReceiver(alphaReceiver, new IntentFilter("com.example.autopager.UPDATE_ALPHA"));
     }
 
-    // 更新次数显示
     public void updateCount(int cur, int total) {
         this.currentCount = cur;
         this.totalCount = total;
@@ -205,7 +185,6 @@ public class FloatWindowService extends Service {
         }
     }
 
-    // 更新透明度
     public void updateAlpha(int alphaPercent) {
         if (floatView != null) {
             float alpha = Math.max(0, Math.min(alphaPercent, 100)) / 100f;
@@ -234,7 +213,6 @@ public class FloatWindowService extends Service {
         if (floatView != null) {
             try {
                 windowManager.removeView(floatView);
-                Log.d(TAG, "悬浮窗已移除");
             } catch (Exception e) {
                 Log.e(TAG, "移除悬浮窗失败", e);
             }
