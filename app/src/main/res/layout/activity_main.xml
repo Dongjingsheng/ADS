@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#F7F8FA"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 顶部栏 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#42A5F5">
+
+        <!-- 更多 -->
+        <TextView
+            android:id="@+id/tv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="22dp"
+            android:text="更多"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+
+        <!-- 标题 -->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="自动翻页器"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_centerInParent="true" />
+
+        <!-- 设置 -->
+        <TextView
+            android:id="@+id/tv_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingRight="22dp"
+            android:text="设置"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <!-- 原内容整体下移 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F7F8FA">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp">
+
+            <!-- 第一步 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="第一步：开启必须权限"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#222"
+                android:paddingTop="22dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp" />
+
+            <!-- 权限卡片 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:padding="16dp">
+
+                <!-- 无障碍权限 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="10dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="无障碍权限"
+                            android:textStyle="bold"
+                            android:textColor="#333"
+                            android:textSize="15sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="用于模拟返回、点击、滑动等"
+                            android:textColor="#888"
+                            android:textSize="12sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/btn_accessibility"
+                        android:text="未开启"
+                        android:textColor="#fff"
+                        android:background="@drawable/bg_btn_red"
+                        android:textSize="13sp"
+                        android:layout_width="72dp"
+                        android:layout_height="32dp"/>
+                </LinearLayout>
+
+                <!-- 悬浮窗权限 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="悬浮窗权限"
+                            android:textStyle="bold"
+                            android:textColor="#333"
+                            android:textSize="15sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="用于悬浮球操作APP"
+                            android:textColor="#888"
+                            android:textSize="12sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/btn_overlay"
+                        android:text="未开启"
+                        android:textColor="#fff"
+                        android:background="@drawable/bg_btn_red"
+                        android:textSize="13sp"
+                        android:layout_width="72dp"
+                        android:layout_height="32dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 第二步 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="第二步：设置自动翻页参数"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#222"
+                android:paddingTop="22dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp" />
+
+            <!-- 参数卡片 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:padding="12dp">
+
+                <!-- 阅读方向设置 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="阅读方向设置"
+                            android:textStyle="bold"
+                            android:textColor="#333"
+                            android:textSize="15sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="可设置自动翻页器的滑动方向（左、右、上、下）"
+                            android:textColor="#888"
+                            android:textSize="12sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <Spinner
+                        android:id="@+id/spinner_direction"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+
+                <!-- 停留时间设置 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="停留时间设置"
+                            android:textStyle="bold"
+                            android:textColor="#333"
+                            android:textSize="15sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="每个页面停留多久后自动翻页"
+                            android:textColor="#888"
+                            android:textSize="12sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <EditText
+                        android:id="@+id/et_stay_time"
+                        android:inputType="number"
+                        android:layout_width="60dp"
+                        android:layout_height="32dp"
+                        android:text="5"
+                        android:gravity="center"
+                        android:background="@android:color/transparent"
+                        android:textColor="#2196F3"
+                        android:textSize="15sp"/>
+                    <TextView
+                        android:text="秒"
+                        android:textColor="#2196F3"
+                        android:textSize="15sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- 总翻页次数设置 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="自动翻页次数"
+                            android:textStyle="bold"
+                            android:textColor="#333"
+                            android:textSize="15sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="总共翻页多少次后自动停止"
+                            android:textColor="#888"
+                            android:textSize="12sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <EditText
+                        android:id="@+id/et_max_page"
+                        android:inputType="number"
+                        android:layout_width="60dp"
+                        android:layout_height="32dp"
+                        android:text="20"
+                        android:gravity="center"
+                        android:background="@android:color/transparent"
+                        android:textColor="#2196F3"
+                        android:textSize="15sp"/>
+                    <TextView
+                        android:text="次"
+                        android:textColor="#2196F3"
+                        android:textSize="15sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- 滑动时间设置 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="8dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="滑动时间设置"
+                            android:textStyle="bold"
+                            android:textColor="#333"
+                            android:textSize="15sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="滑动一次时间，合理设置可以实现匀速滑动效果"
+                            android:textColor="#888"
+                            android:textSize="12sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <EditText
+                        android:id="@+id/et_slide_time"
+                        android:inputType="number"
+                        android:layout_width="60dp"
+                        android:layout_height="32dp"
+                        android:text="500"
+                        android:gravity="center"
+                        android:background="@android:color/transparent"
+                        android:textColor="#2196F3"
+                        android:textSize="15sp"/>
+                    <TextView
+                        android:text="毫秒"
+                        android:textColor="#2196F3"
+                        android:textSize="15sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <!-- 是否随机滑动 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:text="是否开始随机滑动"
+                            android:textStyle="bold"
+                            android:textColor="#333"
+                            android:textSize="15sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:text="给滑动起点和终点增加随机性"
+                            android:textColor="#888"
+                            android:textSize="12sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <Switch
+                        android:id="@+id/switch_random"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 第三步 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="第三步：打开自动翻页面板"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#222"
+                android:paddingTop="22dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp" />
+
+            <!-- 圆形按钮区域 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_show_panel"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:background="@drawable/bg_btn_circle"
+                    android:text=""
+                    android:drawableTop="@android:drawable/ic_media_play"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

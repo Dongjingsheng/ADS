@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">autopager</string>
+    <string name="accessibility_service_desc">自动翻页无障碍服务</string>
+    <string name="accessibility_service_description">无障碍服务</string>
+</resources>
